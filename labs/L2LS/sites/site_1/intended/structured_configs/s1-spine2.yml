@@ -6,7 +6,9 @@ aaa_root:
 banners:
   motd: 'You shall not pass. Unless you are authorized. Then you shall pass.
 
-    EOF'
+    EOF
+
+    '
 config_end: true
 daemon_terminattr:
   cvaddrs:
@@ -76,6 +78,24 @@ ethernet_interfaces:
   peer: s1-leaf4
   peer_interface: Ethernet3
   peer_type: l2leaf
+- name: Ethernet9
+  description: L2_s1-leaf5_Ethernet3
+  shutdown: false
+  channel_group:
+    id: 9
+    mode: active
+  peer: s1-leaf5
+  peer_interface: Ethernet3
+  peer_type: l2leaf
+- name: Ethernet10
+  description: L2_s1-leaf6_Ethernet3
+  shutdown: false
+  channel_group:
+    id: 9
+    mode: active
+  peer: s1-leaf6
+  peer_interface: Ethernet3
+  peer_type: l2leaf
 - name: Ethernet7
   description: P2P_WANCORE_Ethernet2
   shutdown: false
@@ -118,6 +138,15 @@ local_users:
   sha512_password: $6$arista$rXEU01EaJ1ry4oK6PttB50Br3XpW/r6bJKO6NAKgKC/4rRVA6LuZaE/Qziv0p260JxWFZrizhJMwYo2lDBlYA/
   ssh_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCxV1Di1w9kXLuKR88uDrcNgTymURCiVcQRXO3nl0PoPkehAuMjxGhp/XYZa4gV3tIwWhUzqxzP78kTsP58pSUX0sSU+IdTdb5DP1JLaMASMrb/3snrfrI+nQznsV1V4SO7+Q7Ks1bhjHwsjsuYi1KhEuM8gcb27NJUth0E0fkOrXVpiIDzdqbs4k0u2xjaxWwxwlzaCnJibNn0roFypn5pVqKDmHFHC+KeHpjwd5YZJXjDrAfKvugdRqc7Uwt15bpsjaAXTkM/rnbo4aHjMCrVvyPbaE24eMhMmYfa18W7U2iZio8LN7DdVUsfmkVq9FGUBKWidiuC2rchIEMgt0Ir
     arista@melb-auto-workshop-24-2e419c35-eos
+logging:
+  vrfs:
+  - name: default
+    source_interface: Management0
+    hosts:
+    - name: 10.200.0.108
+      protocol: udp
+    - name: 10.200.1.108
+      protocol: udp
 loopback_interfaces:
 - name: Loopback0
   description: ROUTER_ID
@@ -184,6 +213,15 @@ port_channel_interfaces:
     mode: trunk
     trunk:
       allowed_vlan: '20'
+- name: Port-Channel9
+  description: L2_RACK3_Port-Channel2
+  shutdown: false
+  mlag: 9
+  switchport:
+    enabled: true
+    mode: trunk
+    trunk:
+      allowed_vlan: 10,20
 router_ospf:
   process_ids:
   - id: 100
